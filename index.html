@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="유형민 — Discipleship · Worldview · Gospel · Systematic Theology">
+<title>YOO HYEONGMIN — Seoul</title>
+
+<!-- 공유 미리보기 (카카오톡·SNS) — 배포 시 og:image·og:url을 실제 도메인 절대주소로 교체 -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="유형민 목사 — 아무도 흔들 수 없는 열정으로">
+<meta property="og:description" content="복음으로 사람을 살릴 수 있다고 믿습니다. 유형민 목사입니다.">
+<meta property="og:image" content="portrait.jpg">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" type="image/png" href="star.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@100;200;300;400&family=Noto+Serif+KR:wght@200;300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+
+<style>
+/* ── Tokens ─────────────────────────────────────────── */
+:root{
+  --ink:#0c0c0c;
+  --ink-soft:#4c4c4c;
+  --ink-mute:#7e7e7e;
+  --paper:#f1f1f1;
+  --paper-warm:#ecebe9;
+  --hairline:#d6d4d1;
+  --hairline-dark:#2a2a2a;
+
+  --eng:"Jost",-apple-system,sans-serif;
+  --kor:"Noto Serif KR","Apple SD Gothic Neo",serif;
+  --num:"Cormorant Garamond",serif;
+
+  --ls-wide:.32rem;
+  --ls-mid:.25rem;
+  --ls-tight:.02rem;
+
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:#ffffff;
+  color:var(--ink);
+  font-family:var(--kor);
+  font-weight:300;
+  line-height:1.9;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body.no-scroll{overflow:hidden}
+::selection{background:var(--ink);color:var(--paper)}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+/* grain */
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9000;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+
+/* ── Header ─────────────────────────────────────────── */
+.header{
+  position:fixed;inset:0 0 auto 0;z-index:1000;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:2rem 3rem;
+  mix-blend-mode:difference;color:#f1f1f1;
+  animation:slideDown 1.4s var(--ease) .4s both;
+}
+.header .wordmark{
+  font-family:var(--eng);font-weight:200;font-size:.95rem;
+  letter-spacing:var(--ls-wide);text-transform:uppercase;
+}
+.header .wordmark small{
+  display:block;font-size:.55rem;letter-spacing:var(--ls-mid);
+  color:#9a9a9a;margin-top:.15rem;
+}
+.menu-btn{
+  background:none;border:0;cursor:pointer;padding:.6rem 0;
+  display:flex;flex-direction:column;gap:.5rem;width:2.4rem;
+}
+.menu-btn span{
+  display:block;height:1px;background:#f1f1f1;width:100%;
+  transition:transform .5s var(--ease),width .5s var(--ease);
+}
+.menu-btn span:nth-child(2){width:65%;margin-left:auto}
+.menu-btn:hover span:nth-child(2){width:100%}
+body.menu-open .menu-btn span:nth-child(1){transform:translateY(.3rem) rotate(20deg)}
+body.menu-open .menu-btn span:nth-child(2){width:100%;transform:translateY(-.25rem) rotate(-20deg)}
+
+/* ── Overlay menu ───────────────────────────────────── */
+.menu-overlay{
+  position:fixed;inset:0;z-index:900;background:#0c0c0c;color:var(--paper);
+  display:flex;align-items:center;justify-content:center;
+  clip-path:inset(0 0 100% 0);
+  transition:clip-path .9s var(--ease);
+}
+body.menu-open .menu-overlay{clip-path:inset(0 0 0% 0)}
+.menu-overlay nav{text-align:center}
+.menu-overlay a{
+  display:block;
+  font-family:var(--eng);font-weight:100;text-transform:uppercase;
+  font-size:clamp(1.8rem,4.5vw,3.2rem);letter-spacing:var(--ls-mid);
+  line-height:2;color:#8a8a8a;
+  transition:color .4s,letter-spacing .6s var(--ease);
+  opacity:0;transform:translateY(1.5rem);
+}
+.menu-overlay a:hover{color:var(--paper);letter-spacing:.45rem}
+.menu-overlay a i{
+  font-family:var(--kor);font-style:normal;font-size:.85rem;
+  letter-spacing:.4rem;color:#5e5e5e;display:block;line-height:1;margin-top:-.4rem;
+}
+body.menu-open .menu-overlay a{
+  opacity:1;transform:translateY(0);
+  transition:opacity .7s var(--ease),transform .7s var(--ease),color .4s,letter-spacing .6s var(--ease);
+}
+body.menu-open .menu-overlay a:nth-child(1){transition-delay:.35s}
+body.menu-open .menu-overlay a:nth-child(2){transition-delay:.45s}
+body.menu-open .menu-overlay a:nth-child(3){transition-delay:.55s}
+body.menu-open .menu-overlay a:nth-child(4){transition-delay:.65s}
+body.menu-open .menu-overlay a:nth-child(5){transition-delay:.75s}
+
+/* ── Intro ──────────────────────────────────────────── */
+.intro{
+  min-height:100svh;background:#ffffff;color:var(--ink);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;text-align:center;padding:2rem;
+}
+.intro-symbol{
+  width:clamp(14px,1.7vw,20px);height:auto;
+  animation:symbol-rotate 20s linear infinite, fadeIn 2.4s var(--ease) both;
+}
+@keyframes symbol-rotate{to{transform:rotate(360deg)}}
+.intro-calling{
+  margin-top:.8rem;
+  font-family:var(--eng);font-weight:300;text-transform:uppercase;
+  font-size:.9rem;letter-spacing:.6rem;text-indent:.6rem;color:var(--ink-soft);
+  animation:fadeIn 3s var(--ease) 1.75s both;
+}
+.intro-kor{
+  margin-top:2.6rem;
+  font-size:clamp(1.05rem,2vw,1.35rem);letter-spacing:.04rem;color:var(--ink-soft);
+  font-weight:300;line-height:2.15;max-width:38rem;word-break:keep-all;
+  animation:fadeIn 3s var(--ease) 3.4s both;
+}
+.intro-kor em{
+  font-style:normal;font-weight:500;color:var(--ink);
+  font-size:1.2em;letter-spacing:.06rem;
+}
+.intro-kor cite{
+  display:block;font-style:normal;margin-top:.6rem;
+  font-family:var(--eng);font-weight:300;font-size:.6rem;
+  letter-spacing:.3rem;text-transform:uppercase;color:var(--ink-mute);
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideDown{from{opacity:0;transform:translateY(-1.4rem)}to{opacity:1;transform:translateY(0)}}
+
+/* ── Shared section grammar ─────────────────────────── */
+section{position:relative}
+.wrap{max-width:1180px;margin:0 auto;padding:0 3rem}
+.section-pad{padding-top:20rem;padding-bottom:20rem}
+.eyebrow{
+  font-family:var(--eng);font-weight:300;text-transform:uppercase;
+  font-size:.62rem;letter-spacing:var(--ls-wide);color:var(--ink-mute);
+  margin-bottom:3.4rem;
+}
+
+/* 화면에는 안 보이고 검색엔진·스크린리더만 읽는 요소 */
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
+
+/* reveal on scroll — 모수처럼 느리게 떠오르는 등장 */
+.reveal{opacity:0;transform:translateY(3.4rem);transition:opacity 4.2s var(--ease),transform 4.2s var(--ease)}
+.reveal.show{opacity:1;transform:none}
+
+/* ── About ──────────────────────────────────────────── */
+.about{background:transparent}
+.about-grid{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4.5rem}
+.about h2{
+  font-weight:300;font-size:clamp(1.5rem,2.6vw,2.1rem);line-height:2.1;
+  letter-spacing:var(--ls-tight);word-break:keep-all;
+}
+.about h2 b{font-weight:500}
+.about .body{
+  color:var(--ink-soft);font-size:.95rem;max-width:34rem;word-break:keep-all;
+  font-family:var(--eng),"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",sans-serif;
+  font-weight:300;line-height:2;letter-spacing:.02rem;
+}
+.about .body p+p{margin-top:1.6rem}
+.portrait{
+  position:relative;width:100%;max-width:26rem;
+}
+.portrait img{
+  display:block;width:100%;height:auto;
+}
+/* 사진 속 테이블 좌측 라인(16.9%)·밑선(82.3%)에 정렬 */
+.portrait figcaption{
+  position:absolute;left:16.9%;top:calc(82.3% + .7rem);
+  font-family:var(--eng);font-size:.55rem;letter-spacing:.3rem;text-transform:uppercase;color:#77746f;
+}
+
+/* ── Philosophy (코스처럼 번호 매긴 철학) ─────────────── */
+.philosophy{background:transparent}
+.phil-item{
+  display:grid;grid-template-columns:6rem 1fr;gap:3rem;align-items:baseline;
+  padding:4.6rem 0;border-top:1px solid var(--hairline);
+}
+.phil-item:last-child{border-bottom:1px solid var(--hairline)}
+.phil-item .no{
+  font-family:var(--eng);font-weight:200;font-size:.85rem;line-height:1;
+  color:var(--ink-mute);letter-spacing:.28rem;
+}
+/* 원칙들이 하나씩 시차를 두고 떠오르는 계단식 등장 */
+.philosophy .phil-item:nth-of-type(1){transition-delay:0s}
+.philosophy .phil-item:nth-of-type(2){transition-delay:.35s}
+.philosophy .phil-item:nth-of-type(3){transition-delay:.7s}
+.philosophy .phil-item:nth-of-type(4){transition-delay:1.05s}
+.philosophy .phil-item:nth-of-type(5){transition-delay:1.4s}
+.phil-item h3{
+  font-weight:400;font-size:1.25rem;letter-spacing:.15rem;margin-bottom:1.1rem;word-break:keep-all;
+}
+.phil-item h3 span{
+  font-family:var(--eng);font-weight:200;text-transform:uppercase;font-size:.6rem;
+  letter-spacing:var(--ls-mid);color:var(--ink-mute);margin-left:1.2rem;
+}
+.phil-item p{color:var(--ink-soft);font-size:.92rem;max-width:38rem;word-break:keep-all}
+
+/* ── Gallery (모수식 매소너리 · 흑백→컬러) ───────────── */
+.gallery{background:transparent}
+.gallery-grid{columns:3;column-gap:1.4rem}
+.gallery-item{
+  break-inside:avoid;margin-bottom:1.4rem;
+  border-radius:22px;overflow:hidden;
+  transform:translateZ(0); /* 사파리 라운드 클리핑 보정 */
+  box-shadow:0 8px 28px rgba(12,12,12,.10),0 2px 8px rgba(12,12,12,.06);
+  transition:transform 1.2s var(--ease),box-shadow 1.2s var(--ease);
+}
+.gallery-item:hover{
+  transform:translateY(-.55rem);
+  box-shadow:0 28px 56px rgba(12,12,12,.20),0 10px 20px rgba(12,12,12,.10);
+}
+.gallery-item img{
+  display:block;width:100%;height:auto;
+  filter:grayscale(1);
+  transition:filter 1.2s var(--ease),transform 1.6s var(--ease);
+  user-select:none;-webkit-user-drag:none;pointer-events:auto;cursor:default;
+}
+.gallery-item:hover img{filter:grayscale(0);transform:scale(1.03)}
+/* 등장은 다른 reveal과 동일한 느린 상승, 퇴장은 기존(즉시 사라짐) 유지.
+   transition이 아닌 animation을 쓰는 이유: .gallery-item의 호버용 transition을 건드리지 않기 위함 */
+.gallery-item.reveal.show{animation:galleryIn 4.2s var(--ease)}
+@keyframes galleryIn{
+  from{opacity:0;transform:translateZ(0)}
+  to{opacity:1;transform:translateZ(0)}
+}
+
+/* ── Journey ────────────────────────────────────────── */
+.journey{background:transparent}
+.jy-row{
+  display:grid;grid-template-columns:10rem 1fr;gap:3rem;
+  padding:2.2rem 0;border-top:1px solid var(--hairline);align-items:baseline;
+}
+.jy-row:last-child{border-bottom:1px solid var(--hairline)}
+.jy-row .yr{font-family:var(--eng);font-size:1.5rem;font-weight:200;letter-spacing:.05rem}
+.jy-row h3{font-weight:400;font-size:1rem;letter-spacing:.08rem}
+.jy-row p{font-size:.85rem;color:var(--ink-mute);margin-top:.2rem;word-break:keep-all}
+.jy-cat{margin:4.2rem 0 .9rem;font-size:.85rem;letter-spacing:.45rem;color:var(--ink-mute);font-weight:400}
+.jy-cat:first-of-type{margin-top:2.4rem}
+
+/* ── Quote band ─────────────────────────────────────── */
+.quote{
+  background:transparent;color:var(--ink);text-align:center;
+  padding:17rem 2rem;
+}
+.quote blockquote{
+  font-size:clamp(1.3rem,3vw,2rem);font-weight:300;line-height:2.2;
+  max-width:46rem;margin:0 auto;word-break:keep-all;letter-spacing:.05rem;
+}
+.quote blockquote b{font-weight:600;font-size:inherit}
+.quote cite{
+  display:block;margin-top:3rem;font-style:normal;
+  font-family:var(--eng);font-weight:200;text-transform:uppercase;
+  font-size:.6rem;letter-spacing:.45rem;color:var(--ink-mute);
+}
+
+/* ── Contact ────────────────────────────────────────── */
+.contact{background:transparent}
+.contact-inner{text-align:center;max-width:44rem;margin:0 auto}
+.contact h2{
+  font-family:var(--eng);font-weight:100;text-transform:uppercase;
+  font-size:clamp(2rem,6vw,4rem);letter-spacing:var(--ls-mid);line-height:1.3;
+}
+.contact .sub{
+  margin-top:2rem;color:var(--ink-soft);font-size:.95rem;word-break:keep-all;
+  font-family:var(--eng),"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",sans-serif;
+  font-weight:300;line-height:2;letter-spacing:.02rem;
+}
+.contact-mail{
+  display:inline-block;margin-top:3.6rem;
+  font-family:var(--eng);font-weight:300;font-size:1rem;letter-spacing:.2rem;
+  padding-bottom:.5rem;border-bottom:1px solid var(--ink);
+  position:relative;transition:letter-spacing .6s var(--ease);
+}
+.contact-mail:hover{letter-spacing:.32rem}
+.contact-links{
+  margin-top:4.5rem;display:flex;justify-content:center;gap:3.5rem;
+  font-family:var(--eng);font-weight:300;font-size:.62rem;letter-spacing:var(--ls-mid);
+  text-transform:uppercase;color:var(--ink-mute);
+}
+.contact-links a{transition:color .4s}
+.contact-links a:hover{color:var(--ink)}
+
+/* ── Footer ─────────────────────────────────────────── */
+.footer{
+  background:transparent;color:var(--ink-mute);
+  border-top:1px solid var(--hairline);
+  display:flex;justify-content:space-between;align-items:center;gap:2rem;
+  padding:2.4rem 3rem;
+  font-family:var(--eng);font-weight:200;font-size:.58rem;
+  letter-spacing:var(--ls-mid);text-transform:uppercase;
+}
+.footer .sym{width:1.6rem;opacity:.5;animation:symbol-rotate 20s linear infinite}
+
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width:860px){
+  .wrap{padding:0 1.6rem}
+  .header{padding:1.4rem 1.6rem}
+  .section-pad{padding-top:13rem;padding-bottom:13rem}
+  .about-grid{grid-template-columns:1fr;gap:4rem}
+  .portrait{max-width:22rem}
+  .phil-item{grid-template-columns:1fr;gap:1rem;padding:3rem 0}
+  .gallery-grid{columns:2;column-gap:1rem}
+  .gallery-item{margin-bottom:1rem;border-radius:16px}
+  .jy-row{grid-template-columns:1fr;gap:.4rem}
+  .footer{flex-direction:column;text-align:center;gap:1.2rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header class="header">
+  <a class="wordmark" href="#intro">Yoo Hyeongmin<small>아무도 흔들 수 없는 열정으로</small></a>
+  <button class="menu-btn" aria-label="메뉴 열기" aria-expanded="false">
+    <span></span><span></span>
+  </button>
+</header>
+
+<!-- ── Overlay menu ── -->
+<div class="menu-overlay" aria-hidden="true">
+  <nav>
+    <a href="#about">About<i>소개</i></a>
+    <a href="#philosophy">Ministry&nbsp;Philosophy<i>목회철학</i></a>
+    <a href="#work">Gallery<i>갤러리</i></a>
+    <a href="#journey">Journey<i>걸어온 길</i></a>
+    <a href="#contact">Contact<i>연락</i></a>
+  </nav>
+</div>
+
+<!-- ── Intro ── -->
+<section class="intro" id="intro">
+  <h1 class="sr-only">유형민 목사</h1>
+  <!-- 회전 심볼 : 10각 별 (다니엘 12:3) -->
+  <svg class="intro-symbol" viewBox="0 0 100 100" aria-hidden="true">
+    <polygon fill="#0c0c0c" points="50,4 54.64,35.73 77.04,12.79 62.14,41.18 93.75,35.79 65,50 93.75,64.21 62.14,58.82 77.04,87.21 54.64,64.27 50,96 45.36,64.27 22.96,87.21 37.86,58.82 6.25,64.21 35,50 6.25,35.79 37.86,41.18 22.96,12.79 45.36,35.73"/>
+  </svg>
+  <p class="intro-calling">Calling</p>
+
+  <p class="intro-kor">&ldquo;많은 사람을 옳은 데로 돌아오게 한 자는<br><em>별</em>과 같이 영원토록 빛나리라&rdquo;<cite>Daniel 12:3b</cite></p>
+</section>
+
+<!-- ── About ── -->
+<section class="about section-pad" id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <h2 class="reveal">
+        복음으로 사람을<br>
+        <b>살릴 수 있다고 믿습니다.</b>
+      </h2>
+      <figure class="portrait reveal">
+        <img src="portrait.jpg" alt="유형민 포트레이트">
+        <figcaption>Yoo Hyeongmin</figcaption>
+      </figure>
+      <div class="body reveal">
+        <p>
+          CALLING은 &lsquo;부르심&rsquo;을 의미합니다. 예수님은 제자들과
+          처음 만나셨을 때, 제자들을 부르셨습니다. 예수님의 부르심에는
+          특별함이 있습니다. 그 부르심은 단순한 초대가 아니라, 삶의 방향을
+          새롭게 여는 위대한 부름이었습니다.
+        </p>
+        <p>
+          예수님의 부르심 안에는 분명한 목적이 담겨 있습니다. 그것은
+          한 사람을 예수 그리스도의 제자로 세우고, 그리스도께서 이루어 가시는
+          사역에 함께 참여하게 하시는 것입니다.
+        </p>
+        <p>
+          그 사역의 중심에는 복음이 있습니다. 복음만이 사람을 살릴 수 있는
+          유일한 길입니다. 사명자는 복음의 깊이와 제자도의 본질을 따라
+          살아가는 삶을 추구합니다.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Quote ── -->
+<section class="quote">
+  <blockquote class="reveal">
+    하나님을 향한 <b>인간의 올바른 생각</b>이 아니라,<br>
+    인간을 향한 <b>하나님의 올바른 생각</b>을&hellip;
+  </blockquote>
+</section>
+
+<!-- ── Philosophy ── -->
+<section class="philosophy section-pad" id="philosophy">
+  <div class="wrap">
+    <div class="phil-item reveal">
+      <span class="no">01</span>
+      <div>
+        <h3>생사투혼의 심정 <span>Life-and-Death Devotion of Heart</span></h3>
+        <p>&ldquo;생사투혼(生死鬪魂)&rdquo;은 생명을 걸고, 죽음을 각오하는 절박함으로
+           본질을 끝까지 붙드는 혼신의 자세를 뜻합니다. 이 정신은 &ldquo;본질에 내 생명을 걸 수 있는가?&rdquo;라는
+           물음에서 시작되었습니다. 예수님은 한 영혼을 위해 절박하게 매달리셨습니다.
+           생사투혼은 단지 인간의 결의를 뜻하는 영웅주의가 아닙니다. 오히려 주님 없이는
+           단 하루도 살 수 없다는 절박함 속에서 나온 본질에 대한 깊은 매달림입니다.</p>
+      </div>
+    </div>
+
+    <div class="phil-item reveal">
+      <span class="no">02</span>
+      <div>
+        <h3>위로부터의 제자도 <span>Discipleship from Above</span></h3>
+        <p>제자는 고도로 정밀한 훈련과 인간의 노력만으로 완성되지 않습니다.
+           제자의 삶 한복판으로 세차게 밀고 들어오시는 하나님의 계시와 은혜로
+           가능해집니다. &lsquo;위로부터&rsquo;는 철저히 하나님 주권에 순종하고
+           의존할 수밖에 없다는 정신입니다.</p>
+      </div>
+    </div>
+
+    <div class="phil-item reveal">
+      <span class="no">03</span>
+      <div>
+        <h3>복음적 세계관 <span>Gospel-Centered Worldview</span></h3>
+        <p>&ldquo;복음적 세계관&rdquo;은 세상을 단순히 바라보는 관점이 아니라,
+           하나님의 계시와 복음의 빛 아래에서 모든 현실을 해석하고 살아내는
+           신앙의 눈입니다. 우리는 세상의 흐름과 시대정신에 무비판적으로 끌려가는
+           존재가 아니라, 구속사라는 하나님의 큰 역사 속에서 삶의 방향을 분별하는
+           제자입니다. 복음적 세계관은 생각의 장식이 아니라 삶의 뿌리입니다.</p>
+      </div>
+    </div>
+
+    <div class="phil-item reveal">
+      <span class="no">04</span>
+      <div>
+        <h3>신학적 세계관 <span>Theological Worldview</span></h3>
+        <p>오늘날, 우리는 그 어떤 때보다 시대적 소음에 시달리며 살고 있습니다.
+           젠더, 정치, 사회, 이념, 문화의 문제를 둘러싸고 수많은 갈등과 분열을
+           경험하고 있습니다. 이런 현실 속에서 신학적 세계관은 단순히 어느 편에
+           설 것인가의 문제가 아니라 무엇을 붙들고 살아갈 것인가에 대한 진지한
+           고민이며 분별입니다. 신학적 세계관은 혼란한 시대 속에서도 흔들리지 않는
+           기준을 붙들게 합니다.</p>
+      </div>
+    </div>
+
+    <div class="phil-item reveal">
+      <span class="no">05</span>
+      <div>
+        <h3>세계 선교의 마무리 <span>The Completion of Global Mission</span></h3>
+        <p>&ldquo;세계 선교의 마무리&rdquo;는 복음이 아직 닿지 않은 땅과 영혼을 향한
+           거룩한 책임을 뜻합니다. 교회는 우리의 이웃을 향해 전도하며,
+           더 나아가 열방 가운데 그리스도의 복음이 증거되기까지 부르심에 응답해야
+           합니다. 이는 세계가 하나님 나라의 완성을 바라보며 복음의 마지막 주자로
+           서는 믿음의 헌신입니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Gallery ── -->
+<section class="gallery section-pad" id="work">
+  <div class="wrap">
+    <p class="eyebrow reveal">Gallery — 갤러리</p>
+    <!-- 배치: 집(6) → 강단(2) → calling(8) → 설교(1) → 제단화(5) → 11 → 미술관(3) → 집회(4) → calling(7) → 포트레이트(9) -->
+    <div class="gallery-grid">
+      <figure class="gallery-item reveal"><img src="gallery/g6.jpg" alt="" loading="lazy"></figure>
+      <figure class="gallery-item reveal"><img src="gallery/g2.jpg" alt="" loading="lazy"></figure>
+      <figure class="gallery-item reveal"><img src="gallery/g8.jpg" alt="" loading="lazy"></figure>
+      <figure class="gallery-item reveal"><img src="gallery/g1.jpg" alt="" loading="lazy"></figure>
+      <figure class="gallery-item reveal"><img src="gallery/g5.jpg" alt="" loading="lazy"></figure>
+      <figure class="gallery-item reveal"><img src="gallery/g11.jpg" alt="" loading="lazy"></figure>
+      <figure class="gallery-item reveal"><img src="gallery/g3.jpg" alt="" loading="lazy"></figure>
+      <figure class="gallery-item reveal"><img src="gallery/g10.jpg" alt="" loading="lazy"></figure>
+      <figure class="gallery-item reveal"><img src="gallery/g4.jpg" alt="" loading="lazy"></figure>
+      <figure class="gallery-item reveal"><img src="gallery/g9.jpg" alt="" loading="lazy"></figure>
+      <figure class="gallery-item reveal"><img src="gallery/g7.jpg" alt="" loading="lazy"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ── Journey ── -->
+<section class="journey section-pad" id="journey">
+  <div class="wrap">
+    <p class="eyebrow reveal">Journey — 걸어온 길</p>
+
+    <p class="jy-cat reveal">학력</p>
+    <div class="jy-row reveal">
+      <span class="yr">2009 – 2015</span>
+      <div><h3>서울신학대학교 신학과</h3></div>
+    </div>
+    <div class="jy-row reveal">
+      <span class="yr">2015 – 2018</span>
+      <div><h3>서울신학대학교 신학대학원 M.Div.</h3></div>
+    </div>
+    <div class="jy-row reveal">
+      <span class="yr">2018 – 2020</span>
+      <div><h3>서울신학대학교 일반대학원 조직신학 Th.M.</h3></div>
+    </div>
+
+    <p class="jy-cat reveal">사역</p>
+    <div class="jy-row reveal">
+      <span class="yr">2015 – 2017</span>
+      <div><h3>전도사</h3></div>
+    </div>
+    <div class="jy-row reveal">
+      <span class="yr">2017 – 2023</span>
+      <div><h3>풍산교회 전도사·부목사</h3></div>
+    </div>
+    <div class="jy-row reveal">
+      <span class="yr">2023 —</span>
+      <div><h3>사랑의교회 부목사</h3></div>
+    </div>
+
+    <p class="jy-cat reveal">수상</p>
+    <div class="jy-row reveal">
+      <span class="yr"></span>
+      <div><h3>청파 이만신 설교대회 대상</h3></div>
+    </div>
+    <div class="jy-row reveal">
+      <span class="yr"></span>
+      <div><h3>전국신학대학협의회(KAATS) 석사 우수논문상</h3></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact ── -->
+<section class="contact section-pad" id="contact">
+  <div class="wrap contact-inner">
+    <p class="eyebrow reveal">Contact — 연락</p>
+    <p class="sub reveal">사역과 관련된 문의는 아래 이메일로 연락해 주시기 바랍니다.</p>
+    <a class="contact-mail reveal" href="mailto:yoomin7598@gmail.com">yoomin7598@gmail.com</a>
+    <div class="contact-links reveal">
+      <a href="https://www.instagram.com/yhm_7598/" target="_blank" rel="noopener">Instagram</a>
+      <a href="#" rel="noopener">YouTube</a>
+      <a href="#" rel="noopener">Blog</a>
+      <a href="#" rel="noopener">Brunch</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer class="footer">
+  <span>&copy; 2026 Yoo Hyeongmin</span>
+  <svg class="sym" viewBox="0 0 100 100" aria-hidden="true">
+    <polygon fill="#6a6a6a" points="50,4 54.64,35.73 77.04,12.79 62.14,41.18 93.75,35.79 65,50 93.75,64.21 62.14,58.82 77.04,87.21 54.64,64.27 50,96 45.36,64.27 22.96,87.21 37.86,58.82 6.25,64.21 35,50 6.25,35.79 37.86,41.18 22.96,12.79 45.36,35.73"/>
+  </svg>
+  <span>아무도 흔들 수 없는 열정으로</span>
+</footer>
+
+<script>
+// ── 오버레이 메뉴 ──
+const btn = document.querySelector('.menu-btn');
+const overlay = document.querySelector('.menu-overlay');
+function toggleMenu(force){
+  const open = force !== undefined ? force : !document.body.classList.contains('menu-open');
+  document.body.classList.toggle('menu-open', open);
+  document.body.classList.toggle('no-scroll', open);
+  btn.setAttribute('aria-expanded', open);
+  overlay.setAttribute('aria-hidden', !open);
+}
+btn.addEventListener('click', () => toggleMenu());
+overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') toggleMenu(false); });
+
+// ── 스크롤 리빌 ──
+// 뷰포트를 벗어나면 다시 숨겨서, 지나갈 때마다 매번 등장 효과 재생
+const io = new IntersectionObserver(entries => {
+  entries.forEach(en => en.target.classList.toggle('show', en.isIntersecting));
+}, { threshold: .15, rootMargin: '0px 0px -22% 0px' });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
