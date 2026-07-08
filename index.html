@@ -72,7 +72,9 @@ body::after{
   padding:2rem 3rem;
   mix-blend-mode:difference;color:#f1f1f1;
   animation:slideDown 1.4s var(--ease) .4s both;
+  pointer-events:none; /* 헤더 빈 영역은 클릭 통과 — 메뉴 열렸을 때 뒤 항목 클릭 가능 */
 }
+.header .wordmark,.header .menu-btn{pointer-events:auto}
 .header .wordmark{
   font-family:var(--eng);font-weight:200;font-size:.95rem;
   letter-spacing:var(--ls-wide);text-transform:uppercase;
@@ -94,6 +96,12 @@ body::after{
 body.menu-open .menu-btn span:nth-child(1){transform:translateY(.3rem) rotate(20deg)}
 body.menu-open .menu-btn span:nth-child(2){width:100%;transform:translateY(-.25rem) rotate(-20deg)}
 
+/* 산맥 이미지 위에서는 헤더를 흰색으로 고정 (반전 대신) */
+body.header-light .header{mix-blend-mode:normal}
+body.header-light .wordmark{color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+body.header-light .wordmark small{color:rgba(255,255,255,.82);text-shadow:0 1px 6px rgba(0,0,0,.4)}
+body.header-light .menu-btn span{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.35)}
+
 /* ── Overlay menu ───────────────────────────────────── */
 .menu-overlay{
   position:fixed;inset:0;z-index:900;background:#0c0c0c;color:var(--paper);
@@ -104,10 +112,10 @@ body.menu-open .menu-btn span:nth-child(2){width:100%;transform:translateY(-.25r
 body.menu-open .menu-overlay{clip-path:inset(0 0 0% 0)}
 .menu-overlay nav{text-align:center}
 .menu-overlay a{
-  display:block;margin:1.1rem 0;
+  display:block;margin:clamp(.3rem,1.1vh,1rem) 0;
   font-family:var(--eng);font-weight:100;text-transform:uppercase;
-  font-size:clamp(1.8rem,4.5vw,3.2rem);letter-spacing:var(--ls-mid);
-  line-height:2;color:#8a8a8a;
+  font-size:clamp(1.4rem,min(4.5vw,5vh),2.8rem);letter-spacing:var(--ls-mid);
+  line-height:1.55;color:#8a8a8a;
   transition:color .4s,letter-spacing .6s var(--ease);
   opacity:0;transform:translateY(1.5rem);
 }
@@ -125,6 +133,7 @@ body.menu-open .menu-overlay a:nth-child(2){transition-delay:.45s}
 body.menu-open .menu-overlay a:nth-child(3){transition-delay:.55s}
 body.menu-open .menu-overlay a:nth-child(4){transition-delay:.65s}
 body.menu-open .menu-overlay a:nth-child(5){transition-delay:.75s}
+body.menu-open .menu-overlay a:nth-child(6){transition-delay:.85s}
 
 /* ── Intro ──────────────────────────────────────────── */
 .intro{
@@ -145,10 +154,11 @@ body.menu-open .menu-overlay a:nth-child(5){transition-delay:.75s}
 }
 .intro-kor{
   margin-top:2.6rem;
-  font-size:clamp(1.05rem,2vw,1.35rem);letter-spacing:.04rem;color:var(--ink-soft);
+  font-size:clamp(.8rem,3.5vw,1.35rem);letter-spacing:.02rem;color:var(--ink-soft);
   font-weight:300;line-height:2.15;max-width:38rem;word-break:keep-all;
   animation:fadeIn 3s var(--ease) 3.4s both;
 }
+.intro-kor .ik{display:inline}
 .intro-kor em{
   font-style:normal;font-weight:500;color:var(--ink);
   font-size:1.2em;letter-spacing:.06rem;
@@ -187,11 +197,12 @@ section{position:relative}
 .about h2{
   font-weight:300;font-size:clamp(1.5rem,2.6vw,2.1rem);line-height:2.1;
   letter-spacing:var(--ls-tight);word-break:keep-all;
-  margin-bottom:20rem;
+  margin-bottom:24.5rem;
 }
 .about h2 b{font-weight:500}
+.about-visual{display:flex;flex-direction:column;align-items:center}
 .about .body{
-  margin-top:1rem;
+  margin-top:-1rem;position:relative;z-index:2;
   color:var(--ink-soft);font-size:.95rem;max-width:34rem;word-break:keep-all;
   font-family:var(--eng),"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",sans-serif;
   font-weight:300;line-height:2;letter-spacing:.02rem;
@@ -213,19 +224,19 @@ section{position:relative}
 .philosophy{background:transparent}
 .phil-item{
   display:grid;grid-template-columns:6rem 1fr;gap:3rem;align-items:baseline;
-  padding:4.6rem 0;border-top:1px solid var(--hairline);
+  padding:4.6rem 0;border-bottom:1px solid var(--hairline);
 }
-.phil-item:last-child{border-bottom:1px solid var(--hairline)}
+.philosophy .phil-item:first-of-type{border-top:1px solid var(--hairline)}
 .phil-item .no{
   font-family:var(--eng);font-weight:200;font-size:.85rem;line-height:1;
   color:var(--ink-mute);letter-spacing:.28rem;
 }
 /* 원칙들이 하나씩 시차를 두고 떠오르는 계단식 등장 */
 .philosophy .phil-item:nth-of-type(1){transition-delay:0s}
-.philosophy .phil-item:nth-of-type(2){transition-delay:.35s}
-.philosophy .phil-item:nth-of-type(3){transition-delay:.7s}
-.philosophy .phil-item:nth-of-type(4){transition-delay:1.05s}
-.philosophy .phil-item:nth-of-type(5){transition-delay:1.4s}
+.philosophy .phil-item:nth-of-type(2){transition-delay:.22s}
+.philosophy .phil-item:nth-of-type(3){transition-delay:.44s}
+.philosophy .phil-item:nth-of-type(4){transition-delay:.5s}
+.philosophy .phil-item:nth-of-type(5){transition-delay:.55s}
 .phil-item h3{
   font-weight:400;font-size:1.25rem;letter-spacing:.15rem;margin-bottom:1.1rem;word-break:keep-all;
 }
@@ -233,10 +244,28 @@ section{position:relative}
   font-family:var(--eng);font-weight:200;text-transform:uppercase;font-size:.6rem;
   letter-spacing:var(--ls-mid);color:var(--ink-mute);margin-left:1.2rem;
 }
-.phil-item p{color:var(--ink-soft);font-size:.92rem;max-width:38rem;word-break:keep-all}
+.phil-item p{color:var(--ink-soft);font-size:.92rem;max-width:38rem;word-break:keep-all;text-align:justify}
+/* 요약/전문 펼침 */
+.phil-full{
+  display:grid;grid-template-rows:0fr;overflow:hidden;
+  transition:grid-template-rows .6s var(--ease),opacity .5s var(--ease);
+  opacity:0;
+}
+.phil-full > p{min-height:0;margin:0}
+.phil-item.open .phil-full{grid-template-rows:1fr;opacity:1}
+.phil-item.open .phil-full > p{margin-top:1.6rem}
+.phil-item.open .phil-summary{display:none}
+.phil-toggle{
+  margin-top:1.5rem;margin-left:auto;display:block;
+  background:none;border:0;cursor:pointer;padding:.3rem 0;
+  font-family:var(--eng);font-weight:300;font-size:.62rem;letter-spacing:var(--ls-mid);
+  text-transform:uppercase;color:var(--ink-mute);transition:color .4s;
+}
+.phil-toggle:hover{color:var(--ink)}
 
 /* ── Gallery (모수식 매소너리 · 흑백→컬러) ───────────── */
 .gallery{background:transparent}
+.gallery.section-pad{padding-top:8rem} /* 목회철학과의 간격 30% 축소 */
 .gallery-grid{columns:3;column-gap:1.4rem}
 .gallery-item{
   break-inside:avoid;margin-bottom:1.4rem;
@@ -262,6 +291,59 @@ section{position:relative}
 @keyframes galleryIn{
   from{opacity:0;transform:translateZ(0)}
   to{opacity:1;transform:translateZ(0)}
+}
+
+/* ── Star Disciple ──────────────────────────────────── */
+.disciple{background:transparent;margin-top:37.8rem;padding-bottom:15.3rem}
+.disciple-hero{scroll-margin-top:0}
+.disciple-hero{position:relative;width:100%;height:100vh;overflow:hidden}
+.disciple-hero img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+/* 별 + 성구 + 문단을 산맥 위 하늘 가운데에 얹는다 (상단 66% 영역의 중앙) */
+.disciple-overlay{
+  position:absolute;top:0;left:0;right:0;height:71%;z-index:2;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:0 2rem;
+}
+.disciple-star{
+  width:clamp(14px,1.7vw,20px);height:auto;display:block;
+  animation:symbol-rotate 20s linear infinite;
+  filter:drop-shadow(0 0 5px rgba(255,255,255,.75)) drop-shadow(0 0 13px rgba(255,255,255,.4));
+}
+.disciple-star polygon{fill:#fff}
+.disciple-verse{
+  margin:2rem auto 0;max-width:40rem;word-break:keep-all;
+  font-family:var(--eng),"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",sans-serif;
+  font-size:clamp(.82rem,1.4vw,.95rem);line-height:2.1;letter-spacing:.02rem;
+  color:#fff;font-weight:300;text-shadow:0 1px 3px rgba(0,0,0,.7),0 2px 22px rgba(0,0,0,.7);
+}
+.disciple-verse b{
+  font-weight:600;font-size:1.15em;color:#ffffff;
+  text-shadow:0 0 6px rgba(255,255,255,.55),0 0 16px rgba(255,255,255,.3);
+}
+.disciple-verse cite{
+  display:block;margin-top:1.5rem;font-style:normal;
+  font-family:var(--eng);font-weight:300;font-size:.6rem;
+  letter-spacing:.3rem;text-transform:uppercase;color:rgba(255,255,255,.82);
+}
+.disciple-text{
+  margin:1.2rem auto 0;max-width:34rem;word-break:keep-all;
+  color:rgba(255,255,255,.92);font-size:clamp(.78rem,1.25vw,.88rem);line-height:1.95;letter-spacing:.01rem;
+  font-family:var(--kor);font-weight:300;text-shadow:0 1px 3px rgba(0,0,0,.7),0 2px 20px rgba(0,0,0,.7);
+}
+.disciple-text .glow{text-shadow:0 0 9px rgba(255,255,255,.9),0 0 20px rgba(255,255,255,.7),0 1px 3px rgba(0,0,0,.7)}
+.disciple-virtues{
+  list-style:none;margin:2.2rem auto 0;padding:0;max-width:44rem;
+  display:grid;grid-template-columns:repeat(5,1fr);gap:1.1rem .8rem;justify-items:center;
+}
+.disciple-virtues li{
+  font-family:var(--eng);font-weight:300;font-size:.62rem;letter-spacing:.15rem;
+  text-transform:uppercase;color:rgba(255,255,255,.92);white-space:nowrap;
+  text-shadow:0 1px 3px rgba(0,0,0,.75),0 0 14px rgba(0,0,0,.55);
+}
+
+/* 세로 짧은 데스크톱/노트북 — 별 이미지를 늘려 하늘 공간 확보 (별·본문·덕목이 산 위에) */
+@media (min-width:861px) and (max-height:860px){
+  .disciple-hero{height:128vh}
 }
 
 /* ── Journey ────────────────────────────────────────── */
@@ -295,6 +377,7 @@ section{position:relative}
 
 /* ── Contact ────────────────────────────────────────── */
 .contact{background:transparent}
+.contact.section-pad{padding-top:12rem} /* 걸어온 길과의 간격 20% 축소 */
 .contact-inner{text-align:center;max-width:44rem;margin:0 auto}
 .contact h2{
   font-family:var(--eng);font-weight:100;text-transform:uppercase;
@@ -336,12 +419,21 @@ section{position:relative}
   .wrap{padding:0 1.6rem}
   .header{padding:1.4rem 1.6rem}
   .section-pad{padding-top:13rem;padding-bottom:13rem}
-  .about h2{margin-bottom:14.5rem}
+  .about h2{margin-bottom:17.7rem}
   .portrait{max-width:22rem}
   .phil-item{grid-template-columns:1fr;gap:1rem;padding:3rem 0}
   .gallery-grid{columns:2;column-gap:1rem}
   .gallery-item{margin-bottom:1rem;border-radius:16px}
   .jy-row{grid-template-columns:1fr;gap:.4rem}
+  .intro{padding-left:1.3rem;padding-right:1.3rem}
+  .disciple{margin-top:27.5rem}
+  .disciple-hero{height:128vh}
+  .disciple-overlay{height:60%;justify-content:flex-start;padding-top:7rem}
+  .disciple-verse{margin-top:1.3rem;font-size:.78rem;line-height:1.78}
+  .disciple-verse cite{margin-top:.8rem}
+  .disciple-text{margin-top:1rem;font-size:.74rem;line-height:1.72}
+  .disciple-virtues{margin-top:1.6rem;grid-template-columns:repeat(2,auto);gap:.75rem 2.4rem;max-width:18rem}
+  .disciple-virtues li{font-size:.62rem}
   .contact-links{gap:1.3rem;flex-wrap:wrap}
   .footer{flex-direction:column;text-align:center;gap:1.2rem}
 }
@@ -367,6 +459,7 @@ section{position:relative}
     <a href="#about">About<i>소개</i></a>
     <a href="#philosophy">Ministry&nbsp;Philosophy<i>목회철학</i></a>
     <a href="#work">Gallery<i>갤러리</i></a>
+    <a href="#disciple">Star Disciple<i>별과 같은 제자</i></a>
     <a href="#journey">Journey<i>걸어온 길</i></a>
     <a href="#contact">Contact<i>연락</i></a>
   </nav>
@@ -381,7 +474,7 @@ section{position:relative}
   </svg>
   <p class="intro-calling">Calling</p>
 
-  <p class="intro-kor">&ldquo;많은 사람을 옳은 데로 돌아오게 한 자는<br><em>별</em>과 같이 영원토록 빛나리라&rdquo;<cite>Daniel 12:3b</cite></p>
+  <p class="intro-kor"><span class="ik">&ldquo;많은 사람을 옳은 데로 돌아오게 한 자는</span><br><span class="ik"><em>별</em>과 같이 영원토록 빛나리라&rdquo;</span><cite>Daniel 12:3b</cite></p>
 </section>
 
 <!-- ── About ── -->
@@ -392,11 +485,12 @@ section{position:relative}
         복음으로 사람을<br>
         <b>살릴 수 있다고 믿습니다.</b>
       </h2>
-      <figure class="portrait reveal">
+      <div class="about-visual reveal">
+      <figure class="portrait">
         <img src="portrait.jpg" alt="유형민 포트레이트">
         <figcaption>Yoo Hyeongmin</figcaption>
       </figure>
-      <div class="body reveal">
+      <div class="body">
         <p>
           CALLING은 &lsquo;부르심&rsquo;을 의미합니다. 예수님은 제자들과
           처음 만나셨을 때, 제자들을 부르셨습니다. 예수님의 부르심에는
@@ -414,6 +508,7 @@ section{position:relative}
           살아가는 삶을 추구합니다.
         </p>
       </div>
+      </div>
     </div>
   </div>
 </section>
@@ -429,26 +524,50 @@ section{position:relative}
 <!-- ── Philosophy ── -->
 <section class="philosophy section-pad" id="philosophy">
   <div class="wrap">
+    <p class="eyebrow reveal">Ministry Philosophy — 목회철학</p>
     <div class="phil-item reveal">
       <span class="no">01</span>
       <div>
-        <h3>생사투혼의 심정 <span>Life-and-Death Devotion of Heart</span></h3>
-        <p>&ldquo;생사투혼(生死鬪魂)&rdquo;은 생명을 걸고, 죽음을 각오하는 절박함으로
-           본질을 끝까지 붙드는 혼신의 자세를 뜻합니다. 이 정신은 &ldquo;본질에 내 생명을 걸 수 있는가?&rdquo;라는
-           물음에서 시작되었습니다. 예수님은 한 영혼을 위해 절박하게 매달리셨습니다.
-           생사투혼은 단지 인간의 결의를 뜻하는 영웅주의가 아닙니다. 오히려 주님 없이는
-           단 하루도 살 수 없다는 절박함 속에서 나온 본질에 대한 깊은 매달림입니다.</p>
+        <h3>위로부터의 제자도 <span>Discipleship from Above</span></h3>
+        <p class="phil-summary">제자는 고도로 정밀한 훈련과 인간의 노력만으로 완성되지 않습니다. 제자의 삶
+           한복판으로 세차게 밀고 들어오시는 하나님의 계시와 은혜로 가능해집니다. &lsquo;위로부터&rsquo;는 철저히
+           하나님 주권에 순종하고 의존할 수밖에 없다는 정신입니다.</p>
+        <div class="phil-full">
+          <p>제자는 정교한 훈련과 인간의 노력만으로 완성되지 않습니다. 참된 제자의 삶은
+             삶의 한복판으로 찾아오시는 하나님의 계시와 은혜로부터 시작됩니다.<br><br>
+             예수님은 사람이 &ldquo;거듭나야&rdquo; 한다고 말씀하셨습니다. 여기서
+             &lsquo;거듭남&rsquo;은 헬라어 ἄνωθεν(an&omacr;then)으로, &lsquo;다시&rsquo;라는 뜻과 함께
+             &lsquo;위로부터&rsquo;라는 의미를 지닙니다. 제자는 아래로부터가 아닌 먼저 위로부터 새롭게 태어난 사람,
+             곧 하나님의 은혜로 중생한 사람입니다.<br><br>
+             위로부터 거듭난 사람은 더 이상 세상의 가치에 속박되지 않습니다. 그는 세상 안에 살지만,
+             세상이 규정할 수 없는 기준과 소망을 따라 살아갑니다. 그렇기에 참된 제자는 세상이 감당하지
+             못하는 사람, 세상이 흔들 수 없는 사람으로 빚어지며, &ldquo;위로부터 난 지혜&rdquo;(약 3:17)를
+             통해 거룩한 성화를 이루어갑니다. &lsquo;위로부터&rsquo;는 철저히 하나님 주권에 순종하며
+             그분의 은혜에 매달릴 수밖에 없다는 신앙의 고백입니다.</p>
+        </div>
+        <button class="phil-toggle" type="button" aria-expanded="false">More</button>
       </div>
     </div>
 
     <div class="phil-item reveal">
       <span class="no">02</span>
       <div>
-        <h3>위로부터의 제자도 <span>Discipleship from Above</span></h3>
-        <p>제자는 고도로 정밀한 훈련과 인간의 노력만으로 완성되지 않습니다.
-           제자의 삶 한복판으로 세차게 밀고 들어오시는 하나님의 계시와 은혜로
-           가능해집니다. &lsquo;위로부터&rsquo;는 철저히 하나님 주권에 순종하고
-           의존할 수밖에 없다는 정신입니다.</p>
+        <h3>생사투혼의 심정 <span>Life-and-Death Devotion of Heart</span></h3>
+        <p class="phil-summary">&ldquo;생사투혼(生死鬪魂)&rdquo;은 생명을 걸고, 죽음을 각오하는 절박함으로 본질을
+           끝까지 붙드는 혼신의 자세를 뜻합니다. 이 정신은 &ldquo;본질에 내 생명을 걸 수 있는가?&rdquo;라는 물음에서
+           시작되었습니다. 생사투혼은 인간의 결의를 뜻하는 영웅주의가 아니라, 주님 없이는 단 하루도 살 수
+           없다는 절박함 속에서 나온 본질에 대한 깊은 매달림입니다.</p>
+        <div class="phil-full">
+          <p>&ldquo;생사투혼(生死鬪魂)&rdquo;은 생명을 걸고, 죽음을 각오하는 절박함으로
+             본질을 끝까지 붙드는 혼신의 자세를 뜻합니다. 이 정신은 &ldquo;본질에 내 생명을 걸 수 있는가?&rdquo;라는
+             물음에서 시작되었습니다. 주님은 한 영혼을 위해 절박하게 매달리셨습니다.<br><br>
+             겟세마네에서 십자가의 사명을 앞에 두신 주님은 &ldquo;내 마음이 심히 고민하여 죽게 되었으니&rdquo;
+             토로하셨습니다. 그러나 그 절망의 심연에서도 &ldquo;나의 원대로 마시옵고 아버지의 원대로 하옵소서&rdquo;
+             고백하셨습니다. 이것은 단순한 체념이 아니라, 아버지의 뜻이라는 본질 앞에 자신의 생명 전부를
+             내어드린 순종이었습니다. 생사투혼은 단지 인간의 결의를 뜻하는 영웅주의가 아닙니다. 오히려 주님 없이는
+             단 하루도 살 수 없다는 절박함 속에서 나온, 본질을 향한 깊은 매달림입니다.</p>
+        </div>
+        <button class="phil-toggle" type="button" aria-expanded="false">More</button>
       </div>
     </div>
 
@@ -456,11 +575,24 @@ section{position:relative}
       <span class="no">03</span>
       <div>
         <h3>복음적 세계관 <span>Gospel-Centered Worldview</span></h3>
-        <p>&ldquo;복음적 세계관&rdquo;은 세상을 단순히 바라보는 관점이 아니라,
-           하나님의 계시와 복음의 빛 아래에서 모든 현실을 해석하고 살아내는
-           신앙의 눈입니다. 우리는 세상의 흐름과 시대정신에 무비판적으로 끌려가는
-           존재가 아니라, 구속사라는 하나님의 큰 역사 속에서 삶의 방향을 분별하는
-           제자입니다. 복음적 세계관은 생각의 장식이 아니라 삶의 뿌리입니다.</p>
+        <p class="phil-summary">&ldquo;복음적 세계관&rdquo;은 세상을 단순히 바라보는 관점이 아니라, 하나님의 계시와
+           복음의 빛 아래에서 모든 현실을 해석하고 살아내는 신앙의 눈입니다. 우리는 시대정신에 무비판적으로
+           끌려가는 존재가 아니라, 구속사라는 하나님의 큰 역사 속에서 삶의 방향을 분별하는 제자입니다. 복음적
+           세계관은 생각의 장식이 아니라 삶의 뿌리입니다.</p>
+        <div class="phil-full">
+          <p>복음적 세계관은 세상을 바라보는 단순한 관점이 아닙니다. 하나님의 계시와 복음의 빛 아래에서
+             모든 현실을 해석하고 살아내는 신앙의 눈입니다. 제자는 세상의 흐름과 시대정신에 무비판적으로
+             끌려가는 사람이 아니라, 구속사라는 하나님의 큰 이야기 속에서 삶의 방향을 분별하는 사람입니다.<br><br>
+             세계관은 시대와 문화의 변화 속에서 끊임없이 흔들리고 재구성되어 왔습니다. 그러나 우리 주님께서
+             단번에, 영원히 이루신 구원의 복음은 변하지 않습니다. 오늘날 교회는 &ldquo;동일한 것이 새롭게 들려진다&rdquo;는
+             사실을 기억해야 합니다. 교회는 다른 복음을 말하는 공동체가 아닙니다. 동일한 하나님의 말씀을 오늘의
+             질문과 상황 앞에서 새롭게 듣고, 새롭게 고백하며, 새롭게 선포하는 공동체입니다.<br><br>
+             여기서 &ldquo;새롭게&rdquo;란 복음을 현대적 감각으로 포장하거나, 전혀 다른 메시지로 만들어내는 것을
+             뜻하지 않습니다. 또한 시대적 요구에 맞춰 인간의 창의성으로 복음을 재구성하는 것도 아닙니다. 오히려
+             하나님의 말씀은 살아 있고 역동적이기에, 그 말씀은 교회 안에서 언제나 새롭게 들려집니다. 우리는
+             &ldquo;어제 알았던 하나님을 오늘 또 다시 알아야&rdquo; 합니다.</p>
+        </div>
+        <button class="phil-toggle" type="button" aria-expanded="false">More</button>
       </div>
     </div>
 
@@ -468,12 +600,22 @@ section{position:relative}
       <span class="no">04</span>
       <div>
         <h3>신학적 세계관 <span>Theological Worldview</span></h3>
-        <p>오늘날, 우리는 그 어떤 때보다 시대적 소음에 시달리며 살고 있습니다.
-           젠더, 정치, 사회, 이념, 문화의 문제를 둘러싸고 수많은 갈등과 분열을
-           경험하고 있습니다. 이런 현실 속에서 신학적 세계관은 단순히 어느 편에
-           설 것인가의 문제가 아니라 무엇을 붙들고 살아갈 것인가에 대한 진지한
-           고민이며 분별입니다. 신학적 세계관은 혼란한 시대 속에서도 흔들리지 않는
-           기준을 붙들게 합니다.</p>
+        <p class="phil-summary">오늘날 우리는 그 어떤 때보다 시대적 소음에 시달리며 살고 있습니다. 젠더, 정치,
+           사회, 이념, 문화의 문제를 둘러싸고 수많은 갈등과 분열을 경험합니다. 이런 현실 속에서 신학적 세계관은
+           어느 편에 설 것인가의 문제가 아니라 무엇을 붙들고 살아갈 것인가에 대한 진지한 고민이며, 혼란한 시대
+           속에서도 흔들리지 않는 기준을 붙들게 합니다.</p>
+        <div class="phil-full">
+          <p>신학은 하나님을 인간이 소유하거나 규정하려는 학문이 아닙니다. 오히려 인간의 한계 안에서 하나님의
+             말씀에 대해 말하려는 학문적 시도입니다. 그러므로 신학은 &ldquo;언제나 새롭게 다시 시작&rdquo;해야 합니다.
+             신학은 정해진 결론과 내용을 단순히 반복하는 것이 아니라, 새로운 시대 속에서 제기되는 새로운 질문들
+             앞에서 언제나 새롭게 다시 시작합니다. 또한 새롭게 변화하는 상황 속에서 하나님의 말씀을 세상 가운데
+             적절하게 말해야 합니다.<br><br>
+             오늘날 우리는 그 어느 때보다 시대적 소음에 시달리며 살아가고 있습니다. 정치, 사회, 이념, 젠더,
+             문화의 문제를 둘러싸고 수많은 갈등과 분열을 경험하고 있습니다. 이러한 현실 속에서 신학적 세계관은
+             단순히 어느 편에 설 것인가의 문제가 아니라, 무엇을 붙들고 살아갈 것인가에 대한 진지한 고민이자
+             분별입니다. 신학적 세계관은 혼란한 시대 속에서도 교회가 무엇을 향해 나아가야 하는지를 제시합니다.</p>
+        </div>
+        <button class="phil-toggle" type="button" aria-expanded="false">More</button>
       </div>
     </div>
 
@@ -481,11 +623,22 @@ section{position:relative}
       <span class="no">05</span>
       <div>
         <h3>세계 선교의 마무리 <span>The Completion of Global Mission</span></h3>
-        <p>&ldquo;세계 선교의 마무리&rdquo;는 복음이 아직 닿지 않은 땅과 영혼을 향한
-           거룩한 책임을 뜻합니다. 교회는 우리의 이웃을 향해 전도하며,
-           더 나아가 열방 가운데 그리스도의 복음이 증거되기까지 부르심에 응답해야
-           합니다. 이는 세계가 하나님 나라의 완성을 바라보며 복음의 마지막 주자로
-           서는 믿음의 헌신입니다.</p>
+        <p class="phil-summary">&ldquo;세계 선교의 마무리&rdquo;는 복음이 아직 닿지 않은 땅과 영혼을 향한 거룩한
+           책임을 뜻합니다. 교회는 우리의 이웃을 향해 전도하며, 더 나아가 열방 가운데 그리스도의 복음이
+           증거되기까지 부르심에 응답해야 합니다. 이는 세계가 하나님 나라의 완성을 바라보며 복음의 마지막
+           주자로 서는 믿음의 헌신입니다.</p>
+        <div class="phil-full">
+          <p>&ldquo;세계 선교의 마무리&rdquo;는 복음이 아직 닿지 않은 땅과 영혼을 향한 거룩한 책임을 뜻합니다.
+             교회는 우리의 이웃을 향해 전도하며, 더 나아가 열방 가운데 그리스도의 복음이 증거되기까지 부르심에
+             응답해야 합니다. 주님께서는 &lsquo;모든 민족을 제자 삼고, 아버지와 아들과 성령의 이름으로 세례를
+             베풀고 분부한 모든 것을 가르쳐 지키게 하라&rsquo;고 명령하셨습니다.<br><br>
+             선교는 선택 가능한 사역이 아니라 교회의 존재 이유와 맞닿아 있습니다. 우리는 가까운 한 영혼을 품는
+             전도에서 시작해, 복음이 닿지 않은 민족과 세대를 향해 기도하고 보내며 직접 나아가야 합니다. 땅끝을
+             향한 순종은 먼 곳에서만 시작되지 않습니다. 오늘 내 곁의 한 사람을 사랑하고, 복음으로 섬기며, 열방을
+             향한 하나님의 마음에 동참하는 자리에서 시작됩니다. 전도와 선교는 하나님 나라의 완성을 바라보며,
+             교회가 복음의 마지막 주자로 서는 믿음의 헌신입니다.</p>
+        </div>
+        <button class="phil-toggle" type="button" aria-expanded="false">More</button>
       </div>
     </div>
   </div>
@@ -495,19 +648,50 @@ section{position:relative}
 <section class="gallery section-pad" id="work">
   <div class="wrap">
     <p class="eyebrow reveal">Gallery — 갤러리</p>
-    <!-- 배치: 집(6) → 강단(2) → calling(8) → 설교(1) → 제단화(5) → 11 → 미술관(3) → 집회(4) → calling(7) → 포트레이트(9) -->
+    <!-- 배치(3열 기준): 왼쪽[집6·calling흰7(중간)·9] / 가운데[설교1·콘서트11·미술관3·calling검8] / 오른쪽[강단2·10·집회4·제단화5·단체사진12(마지막)]
+         흰 calling은 왼쪽 열 중간, 단체사진 g12가 갤러리의 마지막 -->
     <div class="gallery-grid">
       <figure class="gallery-item reveal"><img src="gallery/g6.jpg" alt="" loading="lazy"></figure>
-      <figure class="gallery-item reveal"><img src="gallery/g2.jpg" alt="" loading="lazy"></figure>
-      <figure class="gallery-item reveal"><img src="gallery/g8.jpg" alt="" loading="lazy"></figure>
+      <figure class="gallery-item reveal"><img src="gallery/g7.jpg" alt="" loading="lazy"></figure>
+      <figure class="gallery-item reveal"><img src="gallery/g9.jpg" alt="" loading="lazy"></figure>
       <figure class="gallery-item reveal"><img src="gallery/g1.jpg" alt="" loading="lazy"></figure>
-      <figure class="gallery-item reveal"><img src="gallery/g5.jpg" alt="" loading="lazy"></figure>
       <figure class="gallery-item reveal"><img src="gallery/g11.jpg" alt="" loading="lazy"></figure>
       <figure class="gallery-item reveal"><img src="gallery/g3.jpg" alt="" loading="lazy"></figure>
+      <figure class="gallery-item reveal"><img src="gallery/g8.jpg" alt="" loading="lazy"></figure>
+      <figure class="gallery-item reveal"><img src="gallery/g2.jpg" alt="" loading="lazy"></figure>
       <figure class="gallery-item reveal"><img src="gallery/g10.jpg" alt="" loading="lazy"></figure>
       <figure class="gallery-item reveal"><img src="gallery/g4.jpg" alt="" loading="lazy"></figure>
-      <figure class="gallery-item reveal"><img src="gallery/g9.jpg" alt="" loading="lazy"></figure>
-      <figure class="gallery-item reveal"><img src="gallery/g7.jpg" alt="" loading="lazy"></figure>
+      <figure class="gallery-item reveal"><img src="gallery/g5.jpg" alt="" loading="lazy"></figure>
+      <figure class="gallery-item reveal"><img src="gallery/g12.jpg" alt="" loading="lazy"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ── Star Disciple ── -->
+<section class="disciple" id="disciple">
+  <div class="disciple-hero">
+    <img src="star2.jpg" alt="별이 빛나는 밤하늘과 설산">
+    <div class="disciple-overlay">
+      <svg class="disciple-star reveal" viewBox="0 0 100 100" aria-hidden="true">
+        <polygon points="50,4 54.64,35.73 77.04,12.79 62.14,41.18 93.75,35.79 65,50 93.75,64.21 62.14,58.82 77.04,87.21 54.64,64.27 50,96 45.36,64.27 22.96,87.21 37.86,58.82 6.25,64.21 35,50 6.25,35.79 37.86,41.18 22.96,12.79 45.36,35.73"/>
+      </svg>
+      <p class="disciple-verse reveal">
+        15 이는 너희가 흠이 없고 순전하여 어그러지고 거스르는 세대 가운데서<br>
+        하나님의 흠 없는 자녀로 세상에서 그들 가운데 <b>빛</b>들로 나타내며<br>
+        16 생명의 말씀을 <b>밝혀</b> 나의 달음질이 헛되지 아니하고 수고도 헛되지 아니함으로<br>
+        그리스도의 날에 내가 자랑할 것이 있게 하려 함이라
+        <cite>Phil. 2:15&ndash;16</cite>
+      </p>
+      <p class="disciple-text reveal">
+        <span class="glow">별</span>은 제자를 상징합니다. <span class="glow">별</span>을 이루는 열 개의 빛살은 제자로서 훈련되어야 할 열 가지 덕목을
+        의미합니다. 제자는 어두운 세상 가운데 복음의 빛을 비추는 사람입니다. 그 빛은 자아실현이 아니라
+        복음실현을 향합니다. 예수님을 따르는 제자의 길이 희미해져 가는 시대 속에서, 어디서든 그리스도를
+        드러내며 빛나는 <span class="glow">별</span>과 같은 제자가 세워지기를 소망합니다.
+      </p>
+      <ul class="disciple-virtues reveal">
+        <li>Spirituality</li><li>Intellect</li><li>Character</li><li>Community</li><li>Devotion</li>
+        <li>Willpower</li><li>Relationship</li><li>Mission</li><li>Responsibility</li><li>Obedience</li>
+      </ul>
     </div>
   </div>
 </section>
@@ -596,12 +780,34 @@ btn.addEventListener('click', () => toggleMenu());
 overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
 document.addEventListener('keydown', e => { if (e.key === 'Escape') toggleMenu(false); });
 
+// ── 목회철학 요약/전문 펼침 ──
+document.querySelectorAll('.phil-toggle').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var item = btn.closest('.phil-item');
+    var open = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+    btn.textContent = open ? 'Less' : 'More';
+  });
+});
+
 // ── 스크롤 리빌 ──
 // 뷰포트를 벗어나면 다시 숨겨서, 지나갈 때마다 매번 등장 효과 재생
 const io = new IntersectionObserver(entries => {
   entries.forEach(en => en.target.classList.toggle('show', en.isIntersecting));
 }, { threshold: .15, rootMargin: '0px 0px -22% 0px' });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// ── 산맥 이미지 위에서 헤더 흰색 고정 ──
+// 헤더가 별 이미지(disciple-hero)에 겹치면 흰색으로, 벗어나면 원래(반전)로
+const heroEl = document.querySelector('.disciple-hero');
+function updateHeaderColor(){
+  const r = heroEl.getBoundingClientRect();
+  const headerMid = 46; // 헤더 세로 중앙 지점
+  document.body.classList.toggle('header-light', r.top <= headerMid && r.bottom >= headerMid);
+}
+window.addEventListener('scroll', updateHeaderColor, { passive: true });
+window.addEventListener('resize', updateHeaderColor);
+updateHeaderColor();
 </script>
 </body>
 </html>
